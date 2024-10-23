@@ -1,14 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import Component from './components/Component';
-import MyOwnTable from './components/MyOwnTable';
+import TileList from './components/task01/TileList';
 
 function App() {
 	return (
 		<div>
-			<Component></Component>
-			<br />
-			<MyOwnTable></MyOwnTable>
+			<TileList />
 		</div>
 	);
 }
