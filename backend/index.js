@@ -1,8 +1,18 @@
+const cors = require('cors');
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
 
+const corsOptions = {
+	origin: '*',
+	methods: 'GET, POST, PUT, DELETE',
+	allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+app.use(cors(corsOptions));
+app.use(bodyParser.json());
 app.get('/', (req, res) => {
-	// res.statusCode = 405;
+	res.statusCode = 404;
 	res.send(
 		"Stop yappin' y'all skibidi sigmas, start coding!<br>🗣️🗣️🗣️CHAT IS THIS REAL???<br>GYAAAATTTTTTT"
 	);
@@ -30,6 +40,16 @@ app.post('/', (req, res) => {
 
 app.get('/helloworld', (req, res) => {
 	res.send("Hello skibidi sigmas, what's you doin'? I dunno.");
+});
+
+let users = [];
+app.post('/api/users', (req, res) => {
+	const user = req.body;
+	users.push(user);
+	res.send(users);
+});
+app.get('/api/users', (req, res) => {
+	res.json(users);
 });
 
 app.listen(8000, () => {

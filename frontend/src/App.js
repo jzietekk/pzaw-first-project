@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import TileList from './components/task01/TileList';
+import Form from './components/task02/Form';
 
 function App() {
 	return (
 		<div>
-			<TileList />
+			<Form />
 		</div>
 	);
 }
