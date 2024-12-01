@@ -1,11 +1,11 @@
 import logo from './logo.svg';
 import './App.css';
-import Form from './components/task02/Form';
+import PokemonList from './components/task03/PokemonList';
 
 function App() {
 	return (
 		<div>
-			<Form />
+			<PokemonList />
 		</div>
 	);
 }

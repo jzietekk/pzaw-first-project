@@ -31,7 +31,7 @@ const Form = () => {
 	}
 	function submitData() {
 		axios
-			.post('http://localhost:8000/api/users', {
+			.post('http://localhost:8000/api/users/add', {
 				name: name,
 				email: email,
 				password: password,
