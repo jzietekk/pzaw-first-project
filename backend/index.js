@@ -5,6 +5,7 @@ const app = express();
 const pokedex = require('./pokedex.json');
 const types = require('./types.json');
 const path = require('path');
+const bcrypt = require('bcrypt');
 
 const corsOptions = {
 	origin: '*',
@@ -81,11 +82,13 @@ app.use(bodyParser.json());
 		const { types = [], searchQuery } = req.query;
 
 		let typesArray = [];
-		const filteredPokemon = pokedex.filter(p => {
-			const matchesType = types.some(type => p.type.includes(type));
-			const matchesSearchQuery = !searchQuery || Object.values(p.name).some(
-				name => String(name).toLowerCase().includes(searchQuery.toLowerCase())
-			);
+		const filteredPokemon = pokedex.filter((p) => {
+			const matchesType = types.some((type) => p.type.includes(type));
+			const matchesSearchQuery =
+				!searchQuery ||
+				Object.values(p.name).some((name) =>
+					String(name).toLowerCase().includes(searchQuery.toLowerCase())
+				);
 
 			return matchesType && matchesSearchQuery;
 		});
@@ -94,7 +97,7 @@ app.use(bodyParser.json());
 
 	pokemonRouter.get('/:id', (req, res) => {
 		const pokemonId = parseInt(req.params.id, 10);
-		const pokemon = pokedex.find(p => p.id === pokemonId);
+		const pokemon = pokedex.find((p) => p.id === pokemonId);
 
 		if (pokemon) {
 			res.json(pokemon);
@@ -110,10 +113,10 @@ app.use(bodyParser.json());
 			return res.status(400).json({ error: 'No types provided' });
 		}
 
-		const typesArray = requestedTypes.split('&').map(type => type.trim());
+		const typesArray = requestedTypes.split('&').map((type) => type.trim());
 
-		const filteredPokemon = pokedex.filter(p =>
-			typesArray.some(type => p.type.includes(type))
+		const filteredPokemon = pokedex.filter((p) =>
+			typesArray.some((type) => p.type.includes(type))
 		);
 
 		if (filteredPokemon.length > 0) {
@@ -132,13 +135,43 @@ app.use(bodyParser.json());
 				res.status(404).json({ error: `Image not found for Pokemon ID: ${pokemonId}` });
 			}
 		});
-
 	});
-
-
-
 }
 
+// task 4 - tanstack form
+{
+	const tanstackRouter = express.Router();
+	app.use('/api/tanstack', tanstackRouter);
+
+	// Pseudo-database
+	const users = [];
+
+	// Register endpoint
+	tanstackRouter.post('/user/register', async (req, res) => {
+		const { email, password, school } = req.body;
+
+		if (!email || !password || !school) {
+			return res.status(400).json({ message: 'Wszystkie pola są wymagane' });
+		}
+
+		const emailExists = users.find((user) => user.email === email);
+		if (emailExists) {
+			return res.status(400).json({ message: 'Email już istnieje' });
+		}
+		try {
+			const hashedPassword = await bcrypt.hash(password, 10);
+			users.push({ email, password: hashedPassword, school });
+			res.status(201).json({ message: 'Użytkownik zarejestrowany' });
+		} catch (error) {
+			res.status(500).json({ message: 'Błąd serwera' });
+		}
+	});
+
+	// Get all users
+	tanstackRouter.get('/users', (req, res) => {
+		res.json(users);
+	});
+}
 app.listen(8000, () => {
 	console.log('Server is running on port 8000');
 });
