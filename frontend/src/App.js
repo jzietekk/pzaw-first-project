@@ -1,11 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
-import PokemonGallery from './components/task05/PokemonGallery';
+import TanstackForm from './components/task04/TanstackForm';
 
 function App() {
 	return (
 		<div>
-			<PokemonGallery />
+			<TanstackForm />
 		</div>
 	);
 }
