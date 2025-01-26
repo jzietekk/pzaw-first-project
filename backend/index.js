@@ -62,7 +62,7 @@ app.use(bodyParser.json());
 	});
 }
 
-// task 3 - pokemons
+// task 3 - pokemons & task 5 - returning image of pokemon
 {
 	const pokemonRouter = express.Router();
 	app.use('/api/pokemon', pokemonRouter);
@@ -130,11 +130,14 @@ app.use(bodyParser.json());
 		const pokemonId = req.params.id.padStart(3, '0');
 		const imagePath = path.join(__dirname, 'pictures', `${pokemonId}.png`);
 
-		res.sendFile(imagePath, (err) => {
-			if (err) {
-				res.status(404).json({ error: `Image not found for Pokemon ID: ${pokemonId}` });
-			}
-		});
+		setTimeout(() => {
+			console.log('Delayed for 3 second.');
+			res.sendFile(imagePath, (err) => {
+				if (err) {
+					res.status(404).json({ error: `Image not found for Pokemon ID: ${pokemonId}` });
+				}
+			});
+		}, '3000');
 	});
 }
 
