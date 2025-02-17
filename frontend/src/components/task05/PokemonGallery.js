@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './style.css'; // Stylizacja (opis poniżej)
+import './style.css';
 
 const PokemonGallery = () => {
 	const [currentImages, setCurrentImages] = useState([]);

@@ -12,7 +12,6 @@ const fetchUsers = async () => {
 const TanstackForm = () => {
 	const queryClient = useQueryClient();
 
-	// TanStack Query: Pobieranie użytkowników
 	const { data: users, isLoading, error } = useQuery({
 		queryKey: ['users'],
 		queryFn: async () => {
@@ -21,7 +20,6 @@ const TanstackForm = () => {
 		},
 	});
 
-	// TanStack Query: Rejestracja użytkownika
 	const mutation = useMutation({
 		mutationFn: (newUser) =>
 			axios.post('http://localhost:8000/api/tanstack/user/register', newUser),
