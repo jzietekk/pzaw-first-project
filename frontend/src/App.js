@@ -1,14 +1,9 @@
 import './App.css';
-import TanstackForm from './components/task04/TanstackForm';
-import PokemonGallery from './components/task05/PokemonGallery';
+import Table from './components/task06/Table';
 function App() {
 	return (
 		<div>
-			<TanstackForm />
-			<hr />
-			<hr />
-			<hr />
-			<PokemonGallery />
+			<Table />
 		</div>
 	);
 }
